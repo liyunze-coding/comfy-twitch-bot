@@ -17,7 +17,7 @@ const commands = {
     'about':`Hey guys! I'm Ryan currently living in Asia, I do co-working streams and I am a second-year computer science college student :D`,
     'intro':`Hey guys! I'm Ryan currently living in Asia, I do co-working streams and I am a second-year computer science college student :D`,
     'discord':`{user} Come join the Discord server here! https://discord.gg/UnHyHkhbga`,
-    'commands':`{user} Check out my commands here! https://github.com/liyunze-coding/comfy-twitch-bot`
+    'commands':`{user} Check out my commands here! https://github.com/liyunze-coding/comfy-twitch-bot#readme`
 }
 
 const broadcaster_commands = {
