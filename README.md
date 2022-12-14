@@ -5,6 +5,11 @@
 -    !intro or !about
 -    !website
 
+## Nice things needed to be said:
+
+-    !compliment
+-    !quote
+
 ## Interaction with users:
 
 -    !hug \@user
