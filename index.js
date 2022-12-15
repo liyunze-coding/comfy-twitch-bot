@@ -49,13 +49,14 @@ const broadcaster_commands = {
 let streamers_to_shoutout = [
     'pinsaregood',     '4l1c3_0',
     'auspexonegaming', 'unknownnie',
-    'charliosaurus',   'cloudyjoel',
+    'charliosaurus',   'cloudydayzzz',
     'theyolotato',     'itsbrandonut',
     'berryspace',      'studypaws',
     'wrongarrow',      'arcaneXVIII',
     'bubxmicn',        'tophurino',
     'wasmishtaken_',   'areeke',
-    'KhrowV',          'brisim_claimhte'
+    'KhrowV',          'brisim_claimhte',
+    'j3dg',            'pcc_lanezzz'
 ]
 
 var streamers = {};
