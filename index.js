@@ -6,6 +6,7 @@ require("dotenv").config();
 
 const compliments = fs.readFileSync('./text_files/compliments.txt', 'utf8').split('\n');
 const quotes = fs.readFileSync('./text_files/quotes.txt', 'utf8').split('\n');
+const random_autoresponders = ["compliment", "quote"];
 
 const commands = {
     'taskhelp':`{user} "!task [task]" to add your task to the list; "!done" when you're done with your task; "!remove" if you made a typo in the previous task.`,
@@ -26,37 +27,33 @@ const commands = {
     'focus':'EVERYONE SHUT THE FUCK UP AND FOCUS RIGHT NOW NODNOD <3'
 }
 
-const mish_compliments = [
-    'you are a rotten potato',
-    'you levi simp smh my head',
-    'you are a smelly meatball',
-    'what means you sorry sorry? you want to sorry me? NO! BECAUSE NOW, BANANA ALREADY FRUIT 2 TIMES',
-    'you smelly fella',
-    'ur a banana, posture-wise',
-    'you are such a levi shrimp, your posture is like a shrimp',
-    `be uwu more and ill stab you uwu`,
-    `you want to be terrorist, be terrorist, now scram you smelly spender`,
-    'you smelly potato',
-]
-
 const broadcaster_commands = {
     'raid':'RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ',
     'raid2':'RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid'
 }
 
+
+
 // streamers I highly recommend
 // incomplete, if you wanna be in the list, just leave a message in my chat :D
 let streamers_to_shoutout = [
-    'pinsaregood',     '4l1c3_0',
-    'auspexonegaming', 'unknownnie',
-    'charliosaurus',   'cloudydayzzz',
-    'theyolotato',     'itsbrandonut',
-    'berryspace',      'studypaws',
-    'wrongarrow',      'arcaneXVIII',
-    'bubxmicn',        'tophurino',
-    'wasmishtaken_',   'areeke',
-    'KhrowV',          'brisim_claimhte',
-    'j3dg',            'pcc_lanezzz'
+    'pinsaregood',       '4l1c3_0',
+    'auspexonegaming',   'unknownnie',
+    'charliosaurus',     'cloudydayzzz',
+    'theyolotato',       'itsbrandonut',
+    'berryspace',        'studypaws',
+    'wrongarrow',        'arcaneXVIII',
+    'bubxmicn',          'tophurino',
+    'wasmishtaken_',     'areeke',
+    'KhrowV',            'brisim_claimhte',
+    'j3dg',              'pcc_lanezzz',
+    'studywyuki',        'imVubVubs',
+    'TG_Khalil',         'study_with_flowergirl',
+    'lyricalclove',      'studystreamken',
+    'euphie___',         'mikewhatwhere',
+    'supernaturalwriter','xeno_hiraeth',
+    'elly78456',         'soxiesox',
+    'warpyn',            'studywithdoc'
 ]
 
 var streamers = {};
@@ -79,7 +76,7 @@ ComfyJS.onCommand = ( user, command, message, flags, extra ) => {
         reply = reply.replace('{user}', `@${user}`);
         reply = reply.replace('{message}', `${message}`)
         ComfyJS.Say(reply);
-    } else if (broadcaster_commands[command] && flags.broadcaster){
+    } else if (broadcaster_commands[command] && (flags.broadcaster || flags.mod)){
         let reply = broadcaster_commands[command];
         reply = reply.replace('{user}', `@${user}`);
         reply = reply.replace('{message}', `${message}`)
@@ -89,7 +86,7 @@ ComfyJS.onCommand = ( user, command, message, flags, extra ) => {
         let localtime = d.toLocaleTimeString('en-US', { hour12: true });
         ComfyJS.Say(`${user} it is currently ${localtime}`);
     } else if (command === 'promote' && flags.broadcaster){
-        let content_of_promotion = `@everyone https://twitch.tv/RyanPython\n\n${message}\n\n*sent from ryans\\_bot\\_*`
+        let content_of_promotion = `<@&1038436118816903210> https://twitch.tv/RyanPython\n\n${message}\n\n*sent from ryans\\_bot\\_*`
 
         sendWebHook(
             process.env.WEBHOOK_URL,
@@ -122,16 +119,14 @@ ComfyJS.onChat = ( user, message, flags, self, extra ) => {
 
     let chance = Math.random() * 100;
 
-    if (!['ryans_bot_', 'streamelements'].includes(user.toLowerCase())){
-        if (chance < 2){ //2% chance
+    if (!['ryans_bot_', 'streamelements'].includes(user.toLowerCase()) && chance == 69){ //1% chance
+        let autoresponder = random_autoresponders[Math.floor(Math.random() * random_autoresponders.length)];
+        
+        if (autoresponder === "compliment"){
             let random_compliment = compliments[Math.floor(Math.random() * compliments.length)];
 
-            if (user.toLowerCase() === 'mishwastaken_'){
-                random_compliment = mish_compliments[Math.floor(Math.random() * mish_compliments.length)];
-            }
-
             ComfyJS.Say(`@${user} ${random_compliment}`);
-        } else if (chance < 4){ // 2% chance
+        } else if (autoresponder === "quote"){
             let random_quote = quotes[Math.floor(Math.random() * quotes.length)];
             ComfyJS.Say(`${random_quote}`);
         }
