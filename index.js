@@ -20,8 +20,7 @@ const commands = {
     'pat':"{user} pats {message} <3 <3",
     'bonk':'{user} bonks {message} >:(',
     'kabedon':'{user} kabedons {message} :OO',
-    'about':`Hey guys! I'm Ryan from Malaysia, I do co-working streams and I am a second-year computer science college student :D`,
-    'intro':`Hey guys! I'm Ryan from Malaysia, I do co-working streams and I am a second-year computer science college student :D`,
+    'welcome':`Hey guys! I'm Ryan from Malaysia, I do co-working streams and I am a second-year computer science college student :D`,
     'discord':`{user} Come join the Discord server here! https://discord.gg/UnHyHkhbga`,
     'commands':`{user} Check out my commands here! https://github.com/liyunze-coding/comfy-twitch-bot#readme`,
     'focus':'EVERYONE SHUT THE FUCK UP AND FOCUS RIGHT NOW NODNOD <3'
@@ -53,7 +52,8 @@ let streamers_to_shoutout = [
     'euphie___',         'mikewhatwhere',
     'supernaturalwriter','xeno_hiraeth',
     'elly78456',         'soxiesox',
-    'warpyn',            'studywithdoc'
+    'warpyn',            'studywithdoc',
+    'kaylaneedsanap',    'studysmrt'
 ]
 
 var streamers = {};
@@ -71,10 +71,19 @@ const sendWebHook = async(url, data) => {
 }
 
 ComfyJS.onCommand = ( user, command, message, flags, extra ) => {
+    if (streamers[user.toLowerCase()]){
+        setTimeout( () => {
+            ComfyJS.Say(`!so @${user}`);
+        }, 1000);
+		
+		streamers[user.toLowerCase()] = false;
+	}
+
     if (commands[command]) {
         let reply = commands[command];
         reply = reply.replace('{user}', `@${user}`);
-        reply = reply.replace('{message}', `${message}`)
+        reply = reply.replace('{message}', `${message}`);
+
         ComfyJS.Say(reply);
     } else if (broadcaster_commands[command] && (flags.broadcaster || flags.mod)){
         let reply = broadcaster_commands[command];
@@ -113,7 +122,9 @@ ComfyJS.onCommand = ( user, command, message, flags, extra ) => {
 
 ComfyJS.onChat = ( user, message, flags, self, extra ) => {
 	if (streamers[user.toLowerCase()]){
-		ComfyJS.Say(`!so @${user}`);
+		setTimeout( () => {
+            ComfyJS.Say(`!so @${user}`);
+        }, 1000);
 		streamers[user.toLowerCase()] = false;
 	}
 
@@ -140,4 +151,5 @@ ComfyJS.onChat = ( user, message, flags, self, extra ) => {
     }
 }
 
-ComfyJS.Init("ryans_bot_", `oauth:${process.env.TWITCH_CLIENT_ID}`, ["RyanPython"]);
+ComfyJS.Init("ryans_bot_", `oauth:${process.env.CLIENT_TOKEN}`, ["RyanPython"]);
+// ComfyJS.Init("RyanPython", `oauth:${process.env.CLIENT_TOKEN}`);
