@@ -2,3 +2,4 @@
 node_modules/*
 package-lock.json
 get_token.txt
+twitch-bot.bat
