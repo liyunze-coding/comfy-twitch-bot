@@ -31,7 +31,7 @@ const commands = {
 	bonk: "{user} bonks {message} >:(",
 	chancla: "{user} throws a chancla at {message} >:(",
 	kabedon: "{user} kabedons {message} :OO",
-	welcome: `Hey guys! I'm Ryan from Malaysia, I do co-working streams and I am a second-year computer science college student :D`,
+	intro: `Hey guys! I'm Ryan from Malaysia, I do co-working streams and I am a second-year computer science college student :D`,
 	discord: `{user} Come join the Discord server here! https://discord.gg/UnHyHkhbga`,
 	commands: `{user} Check out my commands here! https://github.com/liyunze-coding/comfy-twitch-bot#readme`,
 };
@@ -40,8 +40,7 @@ const broadcaster_commands = {
 	raid: "RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ RYANRAID ヽ(*｀ﾟД´)ﾉ",
 	raid2: "RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid RYANRAID TombRaid",
 	raid3: "RYAN ABANDONED US ヽ(*｀ﾟД´)ﾉ RYAN ABANDONED US  ヽ(*｀ﾟД´)ﾉ RYAN ABANDONED US  ヽ(*｀ﾟД´)ﾉ RYAN ABANDONED US  ヽ(*｀ﾟД´)ﾉ RYAN ABANDONED US ヽ(*｀ﾟД´)ﾉ RYAN ABANDONED US  ヽ(*｀ﾟД´)ﾉ RYAN ABANDONED US  ヽ(*｀ﾟД´)ﾉ RYAN ABANDONED US  ",
-	subraid:
-		"RYAN RAID ryanpy1Wrath ryanpy1Wrath RYAN RAID ryanpy1Wrath ryanpy1Wrath RYAN RAID ryanpy1Wrath ryanpy1Wrath RYAN RAID ryanpy1Wrath ryanpy1Wrath RYAN RAID ryanpy1Wrath ryanpy1Wrath RYAN RAID ryanpy1Wrath ryanpy1Wrath ",
+	subraid: "RYAN RAID ryanpy1Wrath ryanpy1Wrath RYAN RAID ryanpy1Wrath ryanpy1Wrath RYAN RAID ryanpy1Wrath ryanpy1Wrath RYAN RAID ryanpy1Wrath ryanpy1Wrath RYAN RAID ryanpy1Wrath ryanpy1Wrath RYAN RAID ryanpy1Wrath ryanpy1Wrath ",
 	raid4: "UWU 💦 NYA MEOW RAID TIME 🕓 ! RYAN IS 😗♻ HERE 🚢💪 TO 💦✌ EAT 😩🗣 YOUR 👉 TOES 👣 NOM NOM JUST KIDDING UWU 💦 NYA MEOW RAID TIME 🕓 ! RYAN IS 😗♻ HERE 🚢💪 TO 💦✌ EAT 😩🗣 YOUR 👉 TOES 👣 NOM NOM JUST KIDDING",
 };
 
@@ -101,7 +100,7 @@ let streamers_to_shoutout = [
 	"acrone",
 	"notagoodplaya",
 	"j2modest",
-	"nihnesyo",
+	"nihn_jnesyo",
 	"nick_kendall",
 	"nixi_lab",
 	"dmclr",
@@ -128,6 +127,11 @@ let streamers_to_shoutout = [
 	"aminastudy",
 	"k8studywithme",
 	"drminakovenus",
+	"piratejack01",
+	"mandztudy",
+	"shazanksss",
+	"okoriparukun",
+	"thepainfulphd",
 ];
 
 var streamers = {};
@@ -162,13 +166,15 @@ function getUsernameId(username) {
 
 function getLastGame(id) {
 	return new Promise((resolve, reject) => {
-		axios
-			.get(`https://api.twitch.tv/helix/channels?broadcaster_id=${id}`, {
+		axios.get(
+			`https://api.twitch.tv/helix/channels?broadcaster_id=${id}`,
+			{
 				headers: {
 					"Client-ID": process.env.CLIENT_ID,
 					Authorization: `Bearer ${process.env.CLIENT_TOKEN}`,
 				},
-			})
+			}
+		)
 			.then((res) => {
 				resolve(res.data.data[0].game_name);
 			})
